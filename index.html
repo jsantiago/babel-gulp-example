@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Gulp+Browserify+Babel</title>
+        <link href="bower_components/normalize.css/normalize.css" rel="stylesheet" type="text/css">
+        <link href="bower_components/prism/themes/prism-twilight.css" rel="stylesheet" type="text/css">
+        <style>
+            body {
+                background-color: #ddd;
+                margin: 0 auto;
+                padding: 5px 10px;
+                width: 750px;
+            }
+        </style>
+    </head>
+    <body>
+        <pre>
+            <code class="language-javascript">
+
+// -----------------------------------------------------------------------------
+// gulpfile.js
+// -----------------------------------------------------------------------------
+
+var browserify = require('browserify');
+var babelify = require('babelify');
+var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
+var uglify = require('gulp-uglify');
+
+gulp.task('js', function(){
+    browserify({
+        entries: './src/js/main.js'
+    })
+    .transform(babelify)
+    .bundle()
+    .pipe(source('main.js'))
+    .pipe(buffer())
+    .pipe(uglify())
+    .pipe(gulp.dest('./dist/js/'));
+});
+
+
+// -----------------------------------------------------------------------------
+// src/js/main.js
+// -----------------------------------------------------------------------------
+
+import * as foo from "./foo";
+var bar = require('./bar');
+
+console.log("Hello, World!");
+console.log("foo.name: ", foo.name);
+console.log("bar.name: ", bar.name);
+
+
+// -----------------------------------------------------------------------------
+// src/js/foo.js
+// -----------------------------------------------------------------------------
+export var name = 'foo';
+
+
+// -----------------------------------------------------------------------------
+// src/js/bar.js
+// -----------------------------------------------------------------------------
+module.exports = {
+    name: 'bar'
+};
+            </code>
+        </pre>
+        <script src="dist/js/main.js"></script>
+        <script src="bower_components/prism/prism.js"></script>
+    </body>
+</html>

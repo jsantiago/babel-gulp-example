@@ -1,0 +1,10 @@
+{
+  "name": "babel-gulp-example",
+  "version": "0.1.0",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "prism": "gh-pages",
+    "normalize.css": "~3.0.2"
+  }
+}
